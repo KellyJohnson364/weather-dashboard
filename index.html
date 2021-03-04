@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <title>Weather Dashboard</title>
+</head>
+
+<body class="flex-column">
+  <header class="hero">
+    <h1 class="title">
+      Weather Dashboard
+    </h1> 
+  </header>
+
+  <main class="flex-row">
+    <div class="col-12 col-md-3">
+      <div class="card">
+        <h2 class="card-header text-center">Enter City</h2>
+        <form id="user-form" class="card-body">
+          <input id="cityname" type="text" class="form-input" />
+          <button type="submit" id="button" class="btn">Search</button>
+        </form>
+      </div>
+      <div class="card">
+        <h2 class="card-header text-center">Searched Cities</h2>
+        <div id= "list" class=""></div>
+      </div>
+    </div>
+
+    <div id= 'results-container' class="container col-md-9">
+      <h4 id="now"></h2>
+     
+      <div id="weather-container" class="container card">
+
+      </div>
+    </div>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+  <script src="assets/js/script.js"></script>
+</body>
+
+</html>
