@@ -10,7 +10,9 @@ let cities=[]
 let lat
 let long
 let list
+let resetEl = $('<button class="btn button">')
 
+// Creates buttons for previously searched cities
 
 let renderCities = function () {
  let remember = localStorage.getItem("cities");
@@ -24,24 +26,38 @@ let renderCities = function () {
 }
 }
 renderCities();
-
+// Collects info from input, replaces buttons with "new search" button
 
 let formSubmitHandler = function (event) {
   event.preventDefault();
   city = cityInputEl.val();
   if (city) {
     getWeatherInfo(city);
+    $(buttonEl).remove()
+    $(citiesEl).remove()
+   $(resetEl).text('New Search')
+    $('#search').append(resetEl)
   } else {
     alert('Please enter a city name');
-  }};
+  };
+  
+}
 
+// Event listener for city buttons.  
 
   $(".button").on('click', function() {
     city = $(this).attr('value')
     getWeatherInfo(city);
+    $(buttonEl).remove()
+    $(citiesEl).remove()
+    $(resetEl).text('New Search')
+    $('#search').append(resetEl)
+   
   })
-
+  
   buttonEl.on('click', formSubmitHandler);
+
+// Fetches current weather information from API
 
 let getWeatherInfo = function (city) {
   let apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q='+ city +'&appid=a44ecc08aa9edc3aa5c949e9fa36e888&units=imperial'
@@ -58,6 +74,8 @@ let getWeatherInfo = function (city) {
   .catch(function (error) {
         alert('Unable to find weather');
   })}  
+
+// Displays current weather info for specified city by creating HTML
 
 let displayWeather = function (weather, searchTerm) {
  timeEl.text(moment().format("MMMM Do YYYY, h:mm a"))
@@ -79,10 +97,8 @@ let displayWeather = function (weather, searchTerm) {
     lat= weather.coord.lat
     long= weather.coord.lon
 
-    console.log(cities)
+  // Adds new city to local storage if it is not already in the list
     
-
-
     list.unshift(weather.name)  
     console.log(list)
     if(list.length> 1) {
@@ -99,7 +115,8 @@ let displayWeather = function (weather, searchTerm) {
     }
     getForecast()
 }
-  
+// Fetches forecast and UVI information from API
+
   let getForecast= function () {    
    
     let forecastUrL= 'https://api.openweathermap.org/data/2.5/onecall?lat='+ lat +'&lon='+ long +'&appid=a44ecc08aa9edc3aa5c949e9fa36e888&units=imperial'
@@ -114,6 +131,8 @@ let displayWeather = function (weather, searchTerm) {
     .catch(function (error) {
         alert('Unable to find weather');
       })}
+
+  // Displays 5 day forecast   
 
   let displayForecast = function (forecast, searchTerm) {
     let uvEl=$('<div>').text('UV Index: '); 
@@ -153,5 +172,10 @@ let displayWeather = function (weather, searchTerm) {
           
   }}
 
+// Reset button and corresponding function ensures reset of page and prevents repeated rendering  
 
+  let newSearch= function () { 
+    location.reload()
+  }
+  resetEl.on('click', newSearch);
 

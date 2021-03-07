@@ -34,7 +34,7 @@ main {
   margin: 20px auto;
   width: 100%;
 }
-
+/* assigns colors based on UVI danger */
 
 .low {
   background-color: rgb(68, 138, 68);
