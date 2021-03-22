@@ -1,8 +1,8 @@
 :root {
-  --primary: #f2fbf6;
+  --primary: #90bd90;
   --secondary: #9caea9;
   --tertiary: #788585;
-  --light-dark: #3e5168;
+  --light-dark: #788585;
   --dark: #283544;
   --border-radius: 5px;
   font-size: 20px;
@@ -16,6 +16,9 @@ body {
   line-height: 1.5;
   font-size: 16px;
   text-decoration: none;
+}
+#list {
+  color: var(--dark);
 }
 
 h1,

@@ -9,34 +9,41 @@ let city
 let cities=[]
 let lat
 let long
-let list
-let resetEl = $('<button class="btn button">')
+let unique
+
 
 // Creates buttons for previously searched cities
 
 let renderCities = function () {
+  
  let remember = localStorage.getItem("cities");
   if (remember) {
-  cities.unshift(remember)
+    $('<option value="">Select City</option>').appendTo(citiesEl);
+    cities.unshift(remember)
     list = cities.toString().split(",");
-  for (let i=0; i < list.length; i++) {
-    $('<div><input type="button" value ="'+ list[i] +'"class="btn button" id=' + i + '></div>').appendTo(citiesEl);
+    unique = [...new Set(list)];
+  for (let i=0; i < unique.length; i++) {
+    $('<option value ="'+ unique[i] +'" id=' + i + '>'+ unique[i] +'</option>').appendTo(citiesEl);
 }}else {
-  list=cities
+  $('.history').hide()
+  unique=cities
 }
 }
+
 renderCities();
 // Collects info from input, replaces buttons with "new search" button
 
 let formSubmitHandler = function (event) {
   event.preventDefault();
   city = cityInputEl.val();
+  cityInputEl.val('')
+  $('.history').css('display', '')
+  $('.weatherDiv').remove()
+  $('.card-group').remove()
+  $('.fiveDay').remove()
   if (city) {
     getWeatherInfo(city);
-    $(buttonEl).remove()
-    $(citiesEl).remove()
-   $(resetEl).text('New Search')
-    $('#search').append(resetEl)
+   
   } else {
     alert('Please enter a city name');
   };
@@ -45,13 +52,16 @@ let formSubmitHandler = function (event) {
 
 // Event listener for city buttons.  
 
-  $(".button").on('click', function() {
-    city = $(this).attr('value')
+  $('#list').change(function() { 
+    console.log(this.value)
+    city = (this.value)
+    console.log(city)
+    $('.weatherDiv').remove()
+    $('.card-group').remove()
+    $('.fiveDay').remove()
     getWeatherInfo(city);
-    $(buttonEl).remove()
-    $(citiesEl).remove()
-    $(resetEl).text('New Search')
-    $('#search').append(resetEl)
+   
+   
    
   })
   
@@ -81,7 +91,7 @@ let displayWeather = function (weather, searchTerm) {
  timeEl.text(moment().format("MMMM Do YYYY, h:mm a"))
   weatherContainerEl.append(timeEl)
 
-  weatherEl = $('<div>');
+  weatherEl = $('<div class="weatherDiv">');
   weatherEl.classList = ' card-header card flex-row justify-center align-center';
   weatherContainerEl.append(weatherEl);
 
@@ -99,20 +109,21 @@ let displayWeather = function (weather, searchTerm) {
 
   // Adds new city to local storage if it is not already in the list
     
-    list.unshift(weather.name)  
-    console.log(list)
-    if(list.length> 1) {
-    for ( i = 0; i < list.length; i++) {
-      for ( k = i + 1; k < list.length; k++) {
-          if (list[i] != list[k]) {
-            console.log(list)
-             localStorage.setItem("cities", (list));
+    unique.unshift(weather.name)  
+    console.log(unique)
+    if(unique.length> 1) {
+    for ( i = 0; i < unique.length; i++) {
+      for ( k = i + 1; k < unique.length; k++) {
+          if (unique[i] != unique[k]) {
+           
+             localStorage.setItem("cities", (unique));
           }else {
-            list.shift()
-            localStorage.setItem("cities", list)
+            unique.shift()
+            localStorage.setItem("cities", unique)
     }}}}else {
-      localStorage.setItem("cities", list)
+      localStorage.setItem("cities", unique)
     }
+    $(citiesEl).children().remove(); 
     getForecast()
 }
 // Fetches forecast and UVI information from API
@@ -134,7 +145,10 @@ let displayWeather = function (weather, searchTerm) {
 
   // Displays 5 day forecast   
 
-  let displayForecast = function (forecast, searchTerm) {
+  let displayForecast = function (forecast) {
+   
+   renderCities();
+
     let uvEl=$('<div>').text('UV Index: '); 
       weatherEl.append(uvEl)
     let uvI=$('<span id="uv">').text(forecast.daily[0].uvi)
@@ -149,10 +163,10 @@ let displayWeather = function (weather, searchTerm) {
       uvI.addClass('very-high')
     }
 
-    titleEl=$('<h2>').text("5-Day Forecast:");
-    resultsContainerEl.append(titleEl);
+    titleEl=$('<h2 class="col-12 fiveDay">').text("5-Day Forecast:");
+    $('main').append(titleEl);
     let forecastEl = $('<div class="card-group">')
-    resultsContainerEl.append(forecastEl)
+    titleEl.append(forecastEl)
     
       for (i=1; i<6; i++) {
       let fDate=(moment(forecast.daily[i].dt, "X").format("M/D/YY"))
@@ -174,8 +188,6 @@ let displayWeather = function (weather, searchTerm) {
 
 // Reset button and corresponding function ensures reset of page and prevents repeated rendering  
 
-  let newSearch= function () { 
-    location.reload()
-  }
-  resetEl.on('click', newSearch);
+  
+
 
