@@ -4,5 +4,6 @@ This weather dashboard provides current and future weather information for the c
 future 5-day forecast in a user’s local area. This was styled with Bootstrap and was dynamically created using JQuery. This app is deployed as seen below is deployed at [kellyjohnson364.github.io/weather-dashboard](https://kellyjohnson364.github.io/weather-dashboard)
 
 ![Screenshot 1 of site](./assets/images/screenshot-1.png)
+![Screenshot 2 of site](./assets/images/screenshot-2.png)
 Email: KJ3641402@gmail.com
 Linkedin: [linkedin.com/in/KellyJohnson364](https://www.linkedin.com/in/kelly-johnson-473227202)
