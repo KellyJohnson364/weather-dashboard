@@ -2,6 +2,7 @@ let buttonEl = $('#button');
 let cityInputEl = $('#cityname');
 let resultsContainerEl= $('#results-container')
 let weatherContainerEl = $('#weather-container');
+let dayEl = $('#today')
 let timeEl = $('#now');
 let citiesEl = $('#list')
 let weatherEl
@@ -15,18 +16,17 @@ let unique
 // Creates buttons for previously searched cities
 
 let renderCities = function () {
-  
- let remember = localStorage.getItem("cities");
+
+ let remember = localStorage.getItem("municipalities");
   if (remember) {
-    $('<option value="">Select City</option>').appendTo(citiesEl);
-    cities.unshift(remember)
-    list = cities.toString().split(",");
+    list = remember.toString().split(",");
     unique = [...new Set(list)];
+    $('<option value="">Select City</option>').appendTo(citiesEl); 
   for (let i=0; i < unique.length; i++) {
     $('<option value ="'+ unique[i] +'" id=' + i + '>'+ unique[i] +'</option>').appendTo(citiesEl);
 }}else {
   $('.history').hide()
-  unique=cities
+  unique=[]
 }
 }
 
@@ -53,9 +53,8 @@ let formSubmitHandler = function (event) {
 // Event listener for city buttons.  
 
   $('#list').change(function() { 
-    console.log(this.value)
     city = (this.value)
-    console.log(city)
+
     $('.weatherDiv').remove()
     $('.card-group').remove()
     $('.fiveDay').remove()
@@ -88,6 +87,7 @@ let getWeatherInfo = function (city) {
 // Displays current weather info for specified city by creating HTML
 
 let displayWeather = function (weather, searchTerm) {
+ dayEl.text(moment().format("dddd")) 
  timeEl.text(moment().format("MMMM Do YYYY, h:mm a"))
   weatherContainerEl.append(timeEl)
 
@@ -109,20 +109,11 @@ let displayWeather = function (weather, searchTerm) {
 
   // Adds new city to local storage if it is not already in the list
     
-    unique.unshift(weather.name)  
-    console.log(unique)
-    if(unique.length> 1) {
-    for ( i = 0; i < unique.length; i++) {
-      for ( k = i + 1; k < unique.length; k++) {
-          if (unique[i] != unique[k]) {
-           
-             localStorage.setItem("cities", (unique));
-          }else {
-            unique.shift()
-            localStorage.setItem("cities", unique)
-    }}}}else {
-      localStorage.setItem("cities", unique)
-    }
+    unique.unshift(weather.name);  
+    list = unique.toString().split(",");
+    singular = [...new Set(list)];
+   localStorage.setItem("municipalities", singular)
+   
     $(citiesEl).children().remove(); 
     getForecast()
 }
@@ -165,21 +156,23 @@ let displayWeather = function (weather, searchTerm) {
 
     titleEl=$('<h2 class="col-12 fiveDay">').text("5-Day Forecast:");
     $('main').append(titleEl);
-    let forecastEl = $('<div class="card-group">')
+    let forecastEl = $('<div class=" row justify-content-md-center">')
     titleEl.append(forecastEl)
     
       for (i=1; i<6; i++) {
       let fDate=(moment(forecast.daily[i].dt, "X").format("M/D/YY"))
-    
-    let cardEl=$('<div class="card ">')
+      let fDay= (moment(forecast.daily[i].dt, "X").format("dddd")) 
+    let cardEl=$('<div class="card m-2 col-5 col-lg-2">')
     forecastEl.append(cardEl)
     let bodyEl=$('<div class="card-body text-center">')
     cardEl.append(bodyEl)
     dateEl=$('<p class="card-header">'+ fDate +'</p>')
+    let week=$('<p class="card-title">'+ fDay+'</p>')
     let fIcon=$('<span class="icon card-text"><img height=100px src="http://openweathermap.org/img/w/'+ forecast.daily[i].weather[0].icon + '.png"></span>')
     let fTemp=$('<p class="card-text">Temp: '+forecast.daily[i].temp.day +'F</p>')
     let fHum=$('<p class="card-text">Humidity:'+ forecast.daily[i].humidity +'%</p>')
     bodyEl.append(dateEl)
+    bodyEl.append(week)
     bodyEl.append(fIcon)
     bodyEl.append(fTemp)
     bodyEl.append(fHum)

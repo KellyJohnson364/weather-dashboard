@@ -17,28 +17,30 @@
     </h1> 
   </header>
 
-  <main class="flex-row">
-    <div class="col-12 col-md-3">
-      <div class="card">
-        <h2 id="search"class="card-header text-center">Enter City</h2>
-        <form id="user-form" class="card-body">
-          <input id="cityname" type="text" class="form-input" />
-          <button type="submit" id="button" class="btn">Search</button>
-        </form>
+  <main class="">
+    <div class="row">
+      <div class="col-12 col-lg-4">
+        <div class="card">
+          <h2 id="search"class="card-header text-center">Enter City</h2>
+          <form id="user-form" class="card-body">
+            <input id="cityname" type="text" placeholder="Enter your City" class="form-control" />
+            <button type="submit" id="button" class="btn" >Search</button>
+          </form>
+        </div>
+        <div class="card history">
+          <h3 class="card-header text-center">Previously Searched</h3>
+          <div class="input-group">
+          <select id= "list" class="dropdown form-control"></select>
+          </div>
+        </div>
       </div>
-      <div class="card history">
-        <h4 class="card-header text-center">Previously Searched</h4>
-        <select id= "list" class="dropdown"></select>
-      </div>
-    </div>
-
-    <div id= 'results-container' class="container col-md-9">
-      <h4 id="now"></h2>
+      <div id= 'results-container' class="col-12 col-lg-8">
+        <h3 id= "today"></h3>
+        <h4 id="now"></h4>
      
-      <div id="weather-container" class="container card">
-
+      <div id="weather-container" class=""></div>
       </div>
-    </div>
+    </div>  
   </main>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
