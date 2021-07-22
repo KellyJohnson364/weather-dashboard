@@ -1,17 +1,16 @@
 :root {
-  --primary: #90bd90;
-  --secondary: #9caea9;
-  --tertiary: #788585;
+  --primary:rgba(30, 131, 106, 0.671);
+  --secondary: #78cab3;
+  --tertiary: #f5272e;  
   --light-dark: #788585;
   --dark: #283544;
-  --border-radius: 5px;
   font-size: 40px;
   box-sizing: border-box;
 }
 
 body {
-  background-color: var(--primary);
-  font-family: Helvetica, Arial, sans-serif;
+  background-color: var(--secondary);
+  font-family: system-ui;
   font-size: 40px;
   color: var(--dark);
   line-height: 1.5;
@@ -21,12 +20,9 @@ body {
 #list {
   color: var(--dark);
 }
-.title {
-  font-size: 125px !important;
-}
+
 h1, h2, h3, h4 {
-  font-weight: 700;
-  font-size: 75px !important;
+  font-weight: 400;
   color: var(--dark);
   line-height: 1.25;
 }
@@ -39,7 +35,7 @@ main {
 /* assigns colors based on UVI danger */
 
 .low {
-  background-color: rgb(68, 138, 68);
+  background-color: var(--primary)
 }
 .moderate {
   background-color: rgb(228, 228, 22);
@@ -48,22 +44,21 @@ main {
   background-color: rgb(216, 151, 31);
 }
 .very-high {
-  background-color: rgb(148, 54, 54);
+  background-color:  var(--tertiary);
 }
 
 .btn {
   padding: 5px 5px;
   width: 100%;
   margin: 5px 0;
-  border-radius: var(--border-radius);
-  color: var(--primary);
-  background-color: var(--light-dark);
+  color: var(--dark);
+  background-color: var(--tertiary);
   box-shadow: 3px 3px var(--dark);
 
 }
 
 .btn:hover {
-  color: var(--primary);
+  color: var(--dark);
   background-color: var(--tertiary);
   transform: translate(0, 0);
   box-shadow: 2px 2px var(--dark);
@@ -78,11 +73,11 @@ main {
 }
 
 .title {
-  font-size: 50px;
-  background-color: var(--primary);
+  font-weight: 500;
+  background-color: var(--tertiary);
   color: var(--dark);
   padding: 0 10px;
-  border-radius: var(--border-radius); 
+  border-radius: 10px; 
 }
 
 .icon {
@@ -93,15 +88,15 @@ main {
 .card {
   margin:10px, 0px;
   font-size: 40px;
-  border: 3px solid var(--dark);
-  border-radius: var(--border-radius);
+
+
 }
 
 .card-header {
-  color: var(--primary);
+  color: var(--tertiary);
   background-color: var(--dark);
   padding: 5px;
-  border-radius: var(--border-radius);
+
 }
 
 .card-body {
@@ -112,12 +107,11 @@ main {
   width: 100%;
   padding: 5px;
   margin: 5px 0;
-
   border: 2px solid var(--light-dark);
 }
 .fiveDay {
   background-color: var(--dark);
-  color: var(--light-dark);
+  color: var(--tertiary);
 }
 
 .flex-row {
